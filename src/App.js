@@ -4,15 +4,26 @@ import AuthPage from "./pages/AuthPage/AuthPage";
 import PostHistoryPage from "./pages/PostHistoryPage/PostHistoryPage";
 import NewPostPage from "./pages/NewPostPage/NewPostPage";
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState(null);
   return (
     <div className="App">
-      <h1>Hello just starting</h1>
-      <AuthPage />
-      <PostHistoryPage />
-      <NewPostPage />
+      {user ? (
+        <>
+          <Routes>
+            <Route
+              path="/posts"
+              element={<PostHistoryPage user={user} setUser={setUser} />}
+            />
+            <Route
+              path="/posts/new"
+              element={<NewPostPage user={user} setUser={setUser} />}
+            />
+          </Routes>
+        </>
+      ) : (
+        <AuthPage setUser={setUser} />
+      )}
     </div>
   );
 }
-
-export default App;
