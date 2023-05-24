@@ -5,11 +5,16 @@
   align-items: center;
   background-color: var(--white);
   border-radius: 2vmin;
+  margin: 8% 35%;
 }
 
 .AuthPage h3 {
+  margin: 25px;
   margin-top: 4vmin;
   text-align: center;
   color: var(--text-light);
   cursor: pointer;
+  background-color: #4caf50;
+  border-radius: 10%;
+  padding: 25px;
 }

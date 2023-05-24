@@ -1,0 +1,11 @@
+.postList {
+  background-color: #a5d6a7;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin: 25px;
+}
+.postList h2 {
+  margin: auto;
+  vertical-align: middle;
+}

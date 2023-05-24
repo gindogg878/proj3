@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-
 const logger = require("morgan");
 require("./config/database");
+const postRoutes = require("./routes/api/posts");
 
 const app = express(); //create our express server//
 app.use(logger("dev")); //
@@ -13,8 +13,25 @@ app.use(express.json());
 // to serve from the production 'build' folder
 app.use(express.static(path.join(__dirname, "build")));
 
+// Middleware to verify token and assign user object of payload to req.user.
+// Be sure to mount before routes
+app.use(require("./config/checkToken"));
+
 // Put API routes here, before the "catch all" route
+
+//sign in and login routes//
 app.use("/api/users", require("./routes/api/users"));
+// Protect the API routes below from anonymous users
+const ensureLoggedIn = require("./config/ensureLoggedIn");
+// app.use("/api/items", ensureLoggedIn, require("./routes/api/items"));
+app.use("/api/posts", postRoutes);
+
+// The following "catch all" route (note the *) is necessary
+// to return the index.html on all non-AJAX requests
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // Configure to use port 3001 instead of 3000 during
 // development to avoid collision with React's dev server
